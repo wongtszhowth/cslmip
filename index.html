@@ -53,7 +53,7 @@
             flex-direction: column;
             height: calc(100vh - var(--nav-height));
             max-height: calc(720px - var(--nav-height));
-            padding: 12px 16px;
+            padding: 14px 18px;
             overflow-y: auto;
             animation: fadeIn 0.3s ease-in-out;
         }
@@ -76,13 +76,13 @@
         }
 
         .title-slide h1 {
-            font-size: 2rem;
+            font-size: 2.2rem;
             color: var(--dark-green);
             margin-bottom: 8px;
         }
 
         .title-slide h2 {
-            font-size: 1.2rem;
+            font-size: 1.3rem;
             color: var(--primary-green);
             font-weight: 500;
             margin-bottom: 16px;
@@ -93,26 +93,26 @@
             color: white;
             padding: 6px 16px;
             border-radius: 20px;
-            font-size: 0.9rem;
+            font-size: 0.95rem;
             margin-bottom: 16px;
             display: inline-block;
         }
 
-        /* Theory Slide */
+        /* Theory Slide - 1. 八大智能格子全部等大 */
         .theory-intro {
             background: var(--light-green);
             border-left: 5px solid var(--primary-green);
             padding: 10px 14px;
             border-radius: 4px;
             margin-bottom: 12px;
-            font-size: 0.85rem;
-            line-height: 1.4;
+            font-size: 0.9rem;
+            line-height: 1.5;
         }
 
         .intelligences-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
-            gap: 8px;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
             margin-top: 6px;
         }
 
@@ -120,15 +120,20 @@
             background: #fff;
             border: 1px solid #c8e6c9;
             border-radius: 8px;
-            padding: 8px;
+            padding: 10px 6px;
             text-align: center;
             box-shadow: 0 2px 4px rgba(0,0,0,0.03);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 70px;
         }
 
         .intel-card .zh {
             font-weight: bold;
             color: var(--dark-green);
-            font-size: 0.85rem;
+            font-size: 0.9rem;
             margin-bottom: 2px;
         }
 
@@ -141,18 +146,18 @@
         .dates-container {
             display: flex;
             flex-wrap: wrap;
-            gap: 10px;
+            gap: 12px;
             justify-content: center;
             align-items: center;
-            margin-top: 12px;
+            margin-top: 16px;
         }
 
         .date-card {
             background: #f1f8e9;
             border: 2px solid var(--accent-green);
             border-radius: 12px;
-            width: 110px;
-            height: 80px;
+            width: 120px;
+            height: 85px;
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -163,13 +168,13 @@
         }
 
         .date-card .date {
-            font-size: 1.2rem;
+            font-size: 1.3rem;
             font-weight: bold;
             color: var(--dark-green);
         }
 
         .date-card .note {
-            font-size: 0.65rem;
+            font-size: 0.7rem;
             color: #d32f2f;
             margin-top: 2px;
             font-weight: bold;
@@ -185,7 +190,7 @@
             background: #f9f9f9;
             padding: 6px;
             border-radius: 8px;
-            margin-bottom: 8px;
+            margin-bottom: 10px;
             border: 1px solid #eee;
             flex-shrink: 0;
         }
@@ -212,16 +217,16 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 6px;
+            margin-bottom: 8px;
             flex-shrink: 0;
         }
 
         .course-id {
-            font-size: 0.95rem;
+            font-size: 1.1rem;
             font-weight: bold;
             color: var(--primary-green);
             background: var(--light-green);
-            padding: 2px 8px;
+            padding: 4px 10px;
             border-radius: 6px;
         }
 
@@ -230,16 +235,16 @@
         }
 
         .course-title {
-            font-size: 0.95rem;
+            font-size: 1.1rem;
             font-weight: bold;
             color: var(--text-dark);
         }
 
         .course-capacity {
-            font-size: 0.8rem;
+            font-size: 0.9rem;
             color: var(--dark-green);
             font-weight: bold;
-            margin-top: 1px;
+            margin-top: 2px;
         }
 
         /* Description & Hangman Area */
@@ -247,8 +252,8 @@
             background: #fcfdfc;
             border: 1px dashed var(--accent-green);
             border-radius: 8px;
-            padding: 8px 10px;
-            margin-bottom: 8px;
+            padding: 10px 14px;
+            margin-bottom: 10px;
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -256,68 +261,78 @@
         }
 
         .desc-text {
-            font-size: 0.8rem;
-            line-height: 1.3;
+            font-size: 0.85rem;
+            line-height: 1.5;
             color: #2c3e50;
             font-style: italic;
-            text-align: center;
+            text-align: left;
         }
 
         .hangman-area {
-            margin-top: 6px;
-            text-align: center;
+            margin-top: 10px;
+            padding-top: 8px;
             border-top: 1px dotted #c8e6c9;
-            padding-top: 4px;
+            text-align: center;
         }
 
         .hangman-info {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 4px;
+            margin-bottom: 6px;
             padding: 0 4px;
         }
 
         .hangman-status {
-            font-size: 0.75rem;
+            font-size: 0.8rem;
             color: var(--text-muted);
+            font-weight: 500;
         }
 
         .tries-left {
-            font-size: 0.75rem;
+            font-size: 0.8rem;
             color: #d32f2f;
             font-weight: bold;
         }
 
         .word-display {
-            font-size: 0.95rem;
-            letter-spacing: 2px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            font-size: 1.05rem;
             font-family: monospace;
             font-weight: bold;
             color: var(--dark-green);
-            margin-bottom: 4px;
-            word-break: break-all;
+            margin-bottom: 8px;
         }
 
+        .word-row {
+            letter-spacing: 3px;
+        }
+
+        /* 3. A-Z 按鈕固定為 2 行每行 13 個 */
         .keyboard {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 2px;
-            justify-content: center;
+            display: grid;
+            grid-template-columns: repeat(13, 1fr);
+            gap: 4px;
             max-width: 100%;
             margin: 0 auto;
         }
 
         .key-btn {
-            width: 22px;
-            height: 24px;
-            font-size: 0.65rem;
+            width: 100%;
+            height: 28px;
+            font-size: 0.75rem;
             border: 1px solid #ccc;
             background: #fff;
             border-radius: 4px;
             cursor: pointer;
             font-weight: bold;
             padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
 
         .key-btn:disabled {
@@ -345,7 +360,7 @@
         /* Gallery */
         .photo-gallery {
             display: flex;
-            gap: 6px;
+            gap: 8px;
             justify-content: center;
             align-items: center;
             flex-wrap: wrap;
@@ -355,8 +370,8 @@
 
         .photo-img {
             max-width: 100%;
-            width: 160px;
-            height: 85px;
+            width: 170px;
+            height: 90px;
             object-fit: cover;
             border-radius: 6px;
             border: 1px solid #ddd;
@@ -368,7 +383,7 @@
             background: #fff;
             border: 2px solid var(--primary-green);
             border-radius: 12px;
-            padding: 10px;
+            padding: 12px;
             text-align: center;
             box-shadow: 0 4px 12px rgba(0,0,0,0.05);
             max-width: 650px;
@@ -376,9 +391,9 @@
         }
 
         .qr-container {
-            width: 90px;
-            height: 90px;
-            margin: 6px auto;
+            width: 100px;
+            height: 100px;
+            margin: 8px auto;
             border: 1px solid #ccc;
             border-radius: 8px;
             overflow: hidden;
@@ -399,10 +414,10 @@
             background: var(--primary-green);
             color: white;
             text-decoration: none;
-            padding: 5px 12px;
+            padding: 6px 14px;
             border-radius: 20px;
             font-weight: bold;
-            font-size: 0.8rem;
+            font-size: 0.85rem;
             margin: 4px 0;
             word-break: break-all;
         }
@@ -410,24 +425,24 @@
         .reg-time {
             color: #d32f2f;
             font-weight: bold;
-            margin: 4px 0;
-            font-size: 0.75rem;
+            margin: 6px 0;
+            font-size: 0.8rem;
         }
 
         .reg-note-red {
-            font-size: 0.7rem;
+            font-size: 0.72rem;
             color: #d32f2f;
             font-weight: bold;
             background: #ffebee;
-            padding: 6px;
+            padding: 8px;
             border-radius: 6px;
             border-left: 4px solid #d32f2f;
             text-align: left;
-            line-height: 1.3;
-            margin-top: 6px;
+            line-height: 1.4;
+            margin-top: 8px;
         }
 
-        /* 永遠固定在底部的控制列 Controls */
+        /* Controls */
         .controls {
             position: absolute;
             bottom: 0;
@@ -467,20 +482,20 @@
         }
 
         .section-title {
-            font-size: 1.1rem;
+            font-size: 1.2rem;
             color: var(--dark-green);
             margin-bottom: 2px;
             text-align: center;
         }
         .section-subtitle {
-            font-size: 0.8rem;
+            font-size: 0.85rem;
             color: var(--primary-green);
-            margin-bottom: 8px;
+            margin-bottom: 10px;
             text-align: center;
             font-weight: 500;
         }
 
-        /* 📱 手機端 (Mobile RWD) 頂部防溢出修復 */
+        /* Mobile RWD */
         @media (max-width: 600px) {
             body {
                 align-items: flex-start;
@@ -495,31 +510,38 @@
             .slide {
                 height: calc(100vh - var(--nav-height));
                 max-height: calc(100vh - var(--nav-height));
-                padding: 10px 10px 10px 10px;
+                padding: 10px;
             }
 
-            .title-slide h1 { font-size: 1.6rem; }
-            .title-slide h2 { font-size: 0.95rem; }
+            /* 手機版：智能格子 2 欄對齊，維持等大 */
+            .intelligences-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
 
-            .intel-tag:not(.active) {
-                display: none;
+            /* 2. 手機端日期卡片變為一列直落 */
+            .dates-container {
+                flex-direction: column;
+                gap: 8px;
             }
 
             .date-card {
-                width: 85px;
-                height: 65px;
-                padding: 2px;
-            }
-            .date-card .date { font-size: 1rem; }
-            .date-card .note { font-size: 0.55rem; }
-
-            .desc-box {
-                padding: 6px;
-                margin-bottom: 6px;
+                width: 100%;
+                max-width: 200px;
+                height: 50px;
+                flex-direction: row;
+                justify-content: space-around;
+                padding: 0 12px;
             }
 
-            .desc-text {
-                font-size: 0.75rem;
+            .date-card .date { font-size: 1.1rem; }
+            .date-card .note { margin-top: 0; }
+
+            .course-id { font-size: 1rem; }
+            .course-title { font-size: 1rem; }
+            .course-capacity { font-size: 0.8rem; }
+
+            .intel-tag:not(.active) {
+                display: none;
             }
 
             .photo-img {
@@ -528,7 +550,6 @@
             }
 
             .key-btn {
-                width: 20px;
                 height: 22px;
                 font-size: 0.6rem;
             }
@@ -551,7 +572,7 @@
         <span class="badge">2026-2027 T1 S4-S6</span>
         <h1>多元智能課</h1>
         <h2>Multi-Intelligence Period</h2>
-        <p style="color: var(--text-muted); font-size: 0.8rem;">請使用下方按鈕或鍵盤左右鍵翻頁 <br> Use navigation buttons or arrow keys to browse</p>
+        <p style="color: var(--text-muted); font-size: 0.85rem;">請使用下方按鈕或鍵盤左右鍵翻頁 <br> Use navigation buttons or arrow keys to browse</p>
     </div>
 
     <!-- Slide 2: Theory -->
@@ -563,10 +584,10 @@
         </div>
         <div class="intelligences-grid">
             <div class="intel-card"><div class="zh">語言智能</div><div class="en">Linguistic</div></div>
-            <div class="intel-card"><div class="zh">邏輯數學智能</div><div class="en">Logical-Mathematical</div></div>
+            <div class="intel-card"><div class="zh">邏輯數學智能</div><div class="en">Logical-Math</div></div>
             <div class="intel-card"><div class="zh">空間智能</div><div class="en">Spatial</div></div>
             <div class="intel-card"><div class="zh">音樂智能</div><div class="en">Musical</div></div>
-            <div class="intel-card"><div class="zh">肢體動覺智能</div><div class="en">Bodily-Kinesthetic</div></div>
+            <div class="intel-card"><div class="zh">肢體動覺智能</div><div class="en">Kinesthetic</div></div>
             <div class="intel-card"><div class="zh">人際智能</div><div class="en">Interpersonal</div></div>
             <div class="intel-card"><div class="zh">內省智能</div><div class="en">Intrapersonal</div></div>
             <div class="intel-card"><div class="zh">自然觀察智能</div><div class="en">Naturalist</div></div>
@@ -595,14 +616,14 @@
         <div class="section-subtitle">Online Registration Details</div>
         <div class="reg-card">
             <h3 style="color: var(--dark-green); margin-bottom: 2px;">網上報名 ‧ 先到先得</h3>
-            <p style="color: var(--primary-green); font-size: 0.8rem;">Apply online ‧ First come, first served</p>
+            <p style="color: var(--primary-green); font-size: 0.85rem;">Apply online ‧ First come, first served</p>
             
             <div class="reg-time">
                 Registration Period from 3rd September (Thu) 20:00 to 4th September (Fri) 16:00
             </div>
 
             <div class="qr-container">
-                <img src="qrcode.jpg" alt="QR Code" onerror="this.onerror=null; this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'90\' height=\'90\'><rect width=\'100%\' height=\'100%\' fill=\'%23eee\'/><text x=\'50%\' y=\'50%\' font-size=\'10\' fill=\'%23888\' text-anchor=\'middle\' dy=\'.3em\'>qrcode.jpg</text></svg>';">
+                <img src="qrcode.jpg" alt="QR Code" onerror="this.onerror=null; this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'100\' height=\'100\'><rect width=\'100%\' height=\'100%\' fill=\'%23eee\'/><text x=\'50%\' y=\'50%\' font-size=\'10\' fill=\'%23888\' text-anchor=\'middle\' dy=\'.3em\'>qrcode.jpg</text></svg>';">
             </div>
 
             <a href="https://forms.microsoft.com/r/YyazF0NJEk" target="_blank" class="reg-link">報名連結 / Registration Link</a>
@@ -640,18 +661,18 @@
         { id: "S02", titleZh: "Phonics", titleEn: "Phonics", cap: "👤 20", intels: ["語言智能"], desc: ["Students practise matching sounds with written symbols.", "They learn to blend these sounds into complete words."], photos: 1, hasHangman: true },
         { id: "S03", titleZh: "普通話演講班", titleEn: "Putonghua Speech Class", cap: "👤 20", intels: ["語言智能"], desc: ["Students practise clear pronunciation while delivering prepared talks.", "They organise ideas and speak confidently in front of others."], photos: 1, hasHangman: false },
         { id: "S04", titleZh: "國際象棋", titleEn: "Chess", cap: "👤 16", intels: ["邏輯數學智能"], desc: ["Players move distinct pieces across a checkered board according to fixed rules.", "Careful planning and foresight help one side gain an advantage."], photos: 2, hasHangman: true },
-        { id: "S05", titleZh: "桌上遊戲", titleEn: "Board Games", cap: "👤 24", intels: ["邏輯數學智能", "人際智能"], desc: ["Groups sit together and take turns following shared rules.", "Friendly competition encourages thinking ahead and adapting strategies."], photos: 2, hasHangman: false },
+        { id: "S05", titleZh: "桌上遊戲", titleEn: "Board Games", cap: "👤 24", intels: ["邏輯數學智能", "人際智能"], desc: ["Groups sit together and take turns following shared rules.", "Friendly competition encourages thinking ahead and adapting strategies."], photos: 2, hasHangman: true },
         { id: "S06", titleZh: "MakeX 機械人", titleEn: "MakeX Robots", cap: "👤 15", intels: ["邏輯數學智能"], desc: ["Teams design and programme machines to complete specific challenges.", "Logical thinking and precise control determine success in each task."], photos: 1, hasHangman: false },
         { id: "S07", titleZh: "英式桌球", titleEn: "Snooker", cap: "👤 12", intels: ["邏輯數學智能", "空間智能", "肢體動覺智能"], desc: ["Players use a long cue to strike balls into pockets on a large table.", "Calculating angles and force helps achieve accurate shots."], photos: 2, hasHangman: true },
-        { id: "S08", titleZh: "花藝", titleEn: "Flower Arrangement", cap: "👤 18", intels: ["空間智能", "自然觀察智能"], desc: ["Participants select and position blooms to create balanced visual designs.", "They consider colour, shape and proportion in every composition."], photos: 2, hasHangman: false },
-        { id: "S09", titleZh: "皮革製作", titleEn: "Leather Craft", cap: "👤 20", intels: ["空間智能"], desc: ["People cut and shape durable material into useful or decorative items.", "Careful measuring and stitching produce well-formed finished pieces."], photos: 2, hasHangman: false },
+        { id: "S08", titleZh: "花藝", titleEn: "Flower Arrangement", cap: "👤 18", intels: ["空間智能", "自然觀察智能"], desc: ["Participants select and position blooms to create balanced visual designs.", "They consider colour, shape and proportion in every composition."], photos: 2, hasHangman: true },
+        { id: "S09", titleZh: "皮革製作", titleEn: "Leather Craft", cap: "👤 20", intels: ["空間智能"], desc: ["People cut and shape durable material into useful or decorative items.", "Careful measuring and stitching produce well-formed finished pieces."], photos: 2, hasHangman: true },
         { id: "S10", titleZh: "黏土製作 / 陶藝工作坊", titleEn: "Clay Making / Pottery Workshop", cap: "👤 20", intels: ["空間智能"], desc: ["Learners mould soft material into three-dimensional forms with their hands.", "They refine shapes and surfaces before the pieces are hardened."], photos: 1, hasHangman: false },
         { id: "S11", titleZh: "攝影", titleEn: "Photography", cap: "👤 20", intels: ["空間智能"], desc: ["Individuals capture interesting scenes through a lens.", "They adjust light and angle to create clear visual records."], photos: 2, hasHangman: true },
         { id: "S12", titleZh: "流行聲樂技巧", titleEn: "Popular Vocal Techniques", cap: "👤 15", intels: ["音樂智能"], desc: ["Singers practise controlling pitch, breath and tone quality.", "They develop expressive ways to deliver contemporary songs."], photos: 1, hasHangman: false },
         { id: "S13", titleZh: "健身入門", titleEn: "Gym Beginner", cap: "👤 16", intels: ["肢體動覺智能", "內省智能"], desc: ["Newcomers practise basic movements to strengthen the body.", "Regular sessions improve endurance, balance and overall fitness."], photos: 2, hasHangman: false },
         { id: "S14", titleZh: "跆拳道", titleEn: "Taekwondo", cap: "👤 20", intels: ["肢體動覺智能"], desc: ["Trainees learn precise kicks, blocks and strikes in a structured system.", "Proper stance and timing build power and self-control."], photos: 2, hasHangman: true },
         { id: "S15", titleZh: "腰旗美式足球", titleEn: "Flag Football", cap: "👤 22", intels: ["肢體動覺智能", "人際智能"], desc: ["Players run, pass and evade opponents while protecting a small flag.", "Team coordination and quick physical reactions decide each play."], photos: 2, hasHangman: false },
-        { id: "S16", titleZh: "烘焙班", titleEn: "Baking Class", cap: "👤 20", intels: ["自然觀察智能"], desc: ["Learners mix ingredients and apply heat to create edible results.", "Precise measurements and timing affect the final texture and taste."], photos: 1, hasHangman: false },
+        { id: "S16", titleZh: "烘焙班", titleEn: "Baking Class", cap: "👤 20", intels: ["自然觀察智能"], desc: ["Learners mix ingredients and apply heat to create edible results.", "Precise measurements and timing affect the final texture and taste."], photos: 1, hasHangman: true },
         { id: "S17", titleZh: "智能飼養", titleEn: "Hermetia Illucens Breeding", cap: "👤 15", intels: ["自然觀察智能"], desc: ["Keepers provide organic waste as food for growing larvae.", "They observe the life cycle and collect useful by-products from the process."], photos: 1, hasHangman: false }
     ];
 
@@ -684,7 +705,7 @@
             <div class="desc-box">
                 <div class="desc-text">
                     <p>${course.desc[0]}</p>
-                    <p style="margin-top:2px;">${course.desc[1]}</p>
+                    <p style="margin-top:4px;">${course.desc[1]}</p>
                 </div>
                 ${course.hasHangman ? `
                     <div class="hangman-area">
@@ -694,7 +715,7 @@
                         </div>
                         <div class="word-display" id="display-${course.id}"></div>
                         <div class="keyboard" id="kb-${course.id}"></div>
-                        <div style="text-align: center; margin-top: 4px;">
+                        <div style="text-align: center; margin-top: 6px;">
                             <button class="skip-btn" onclick="skipHangman('${course.id}')">跳過猜謎 Skip</button>
                         </div>
                     </div>
@@ -705,7 +726,7 @@
         let photosHtml = '<div class="photo-gallery">';
         for (let p = 1; p <= course.photos; p++) {
             const imgSrc = `${course.id}_0${p}.jpg`;
-            photosHtml += `<img src="${imgSrc}" alt="${course.titleZh} 相片 ${p}" class="photo-img" onerror="this.onerror=null; this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'160\' height=\'85\'><rect width=\'100%\' height=\'100%\' fill=\'%23e0e0e0\'/><text x=\'50%\' y=\'50%\' font-size=\'10\' fill=\'%23777\' text-anchor=\'middle\' dy=\'.3em\'>${imgSrc}</text></svg>';">`;
+            photosHtml += `<img src="${imgSrc}" alt="${course.titleZh} 相片 ${p}" class="photo-img" onerror="this.onerror=null; this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'170\' height=\'90\'><rect width=\'100%\' height=\'100%\' fill=\'%23e0e0e0\'/><text x=\'50%\' y=\'50%\' font-size=\'10\' fill=\'%23777\' text-anchor=\'middle\' dy=\'.3em\'>${imgSrc}</text></svg>';">`;
         }
         photosHtml += '</div>';
 
@@ -751,23 +772,29 @@
             triesEl.innerText = `機會 Tries: ${state.maxTries - state.wrongTries}`;
         }
 
-        let displayText = '';
+        const words = state.targetWord.split(' ');
+        let displayHtml = '';
         let isComplete = true;
 
-        for (let char of state.targetWord) {
-            if (/[A-Z]/.test(char)) {
-                if (state.guessedLetters.has(char) || state.solved) {
-                    displayText += char + ' ';
+        words.forEach(word => {
+            let wordHtml = '<div class="word-row">';
+            for (let char of word) {
+                if (/[A-Z]/.test(char)) {
+                    if (state.guessedLetters.has(char) || state.solved) {
+                        wordHtml += char + ' ';
+                    } else {
+                        wordHtml += '_ ';
+                        isComplete = false;
+                    }
                 } else {
-                    displayText += '_ ';
-                    isComplete = false;
+                    wordHtml += char + ' ';
                 }
-            } else {
-                displayText += char + ' ';
             }
-        }
+            wordHtml += '</div>';
+            displayHtml += wordHtml;
+        });
 
-        displayEl.innerText = displayText.trim();
+        displayEl.innerHTML = displayHtml;
 
         if (isComplete && !state.solved) {
             state.solved = true;
@@ -822,7 +849,7 @@
         slides.forEach((slide, idx) => {
             if (idx === currentSlide) {
                 slide.classList.add('active');
-                slide.scrollTop = 0; // 切換頁面時自動回到頂部
+                slide.scrollTop = 0;
             } else {
                 slide.classList.remove('active');
             }
