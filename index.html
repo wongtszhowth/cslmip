@@ -1,894 +1,704 @@
 <!DOCTYPE html>
 <html lang="zh-HK">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>多元智能課 Multi-Intelligence Period</title>
-    <style>
-        :root {
-            --primary-green: #2e7d32;
-            --light-green: #e8f5e9;
-            --accent-green: #4caf50;
-            --dark-green: #1b5e20;
-            --text-dark: #2c3e50;
-            --text-muted: #666;
-            --bg-grad: linear-gradient(135deg, #f1f8e9 0%, #e8f5e9 100%);
-            --nav-height: 50px;
-        }
-
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: 'PingFang TC', 'Microsoft JhengHei', 'Helvetica Neue', Helvetica, Arial, sans-serif;
-        }
-
-        body {
-            background: var(--bg-grad);
-            color: var(--text-dark);
-            height: 100vh;
-            width: 100vw;
-            overflow: hidden;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .slide-container {
-            width: 100%;
-            max-width: 1000px;
-            height: 100vh;
-            max-height: 720px;
-            background: #ffffff;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-            border-radius: 16px;
-            position: relative;
-            overflow: hidden;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .slide {
-            display: none;
-            flex-direction: column;
-            height: calc(100vh - var(--nav-height));
-            max-height: calc(720px - var(--nav-height));
-            padding: 14px 18px;
-            overflow-y: auto;
-            animation: fadeIn 0.3s ease-in-out;
-        }
-
-        .slide.active {
-            display: flex !important;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(8px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        /* Cover Slide */
-        .title-slide {
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            background: linear-gradient(180deg, #ffffff 0%, #f1f8e9 100%);
-        }
-
-        .title-slide h1 {
-            font-size: 2.2rem;
-            color: var(--dark-green);
-            margin-bottom: 8px;
-        }
-
-        .title-slide h2 {
-            font-size: 1.3rem;
-            color: var(--primary-green);
-            font-weight: 500;
-            margin-bottom: 16px;
-        }
-
-        .badge {
-            background: var(--primary-green);
-            color: white;
-            padding: 6px 16px;
-            border-radius: 20px;
-            font-size: 0.95rem;
-            margin-bottom: 16px;
-            display: inline-block;
-        }
-
-        /* Theory Slide - 八大智能格子全部等大 */
-        .theory-intro {
-            background: var(--light-green);
-            border-left: 5px solid var(--primary-green);
-            padding: 10px 14px;
-            border-radius: 4px;
-            margin-bottom: 12px;
-            font-size: 0.9rem;
-            line-height: 1.5;
-        }
-
-        .intelligences-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 10px;
-            margin-top: 6px;
-        }
-
-        .intel-card {
-            background: #fff;
-            border: 1px solid #c8e6c9;
-            border-radius: 8px;
-            padding: 10px 6px;
-            text-align: center;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.03);
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            height: 70px;
-        }
-
-        .intel-card .zh {
-            font-weight: bold;
-            color: var(--dark-green);
-            font-size: 0.9rem;
-            margin-bottom: 2px;
-        }
-
-        .intel-card .en {
-            font-size: 0.7rem;
-            color: var(--text-muted);
-        }
-
-        /* Date Slide - 調整卡片大小以支援英文日期格式 */
-        .dates-container {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 12px;
-            justify-content: center;
-            align-items: center;
-            margin-top: 16px;
-        }
-
-        .date-card {
-            background: #f1f8e9;
-            border: 2px solid var(--accent-green);
-            border-radius: 12px;
-            width: 140px; /* 相應調寬以適應長英文字母 */
-            height: 90px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            padding: 8px;
-            box-sizing: border-box;
-        }
-
-        .date-card .date {
-            font-size: 1.05rem;
-            font-weight: bold;
-            color: var(--dark-green);
-            line-height: 1.2;
-        }
-
-        .date-card .note {
-            font-size: 0.7rem;
-            color: #d32f2f;
-            margin-top: 4px;
-            font-weight: bold;
-            line-height: 1.1;
-        }
-
-        /* Navigation Bar for Intelligences on Course Pages */
-        .intel-nav-bar {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 4px;
-            justify-content: center;
-            background: #f9f9f9;
-            padding: 6px;
-            border-radius: 8px;
-            margin-bottom: 10px;
-            border: 1px solid #eee;
-            flex-shrink: 0;
-        }
-
-        .intel-tag {
-            font-size: 0.7rem;
-            padding: 3px 6px;
-            border-radius: 10px;
-            background: #e0e0e0;
-            color: #888;
-            transition: all 0.3s;
-            text-align: center;
-        }
-
-        .intel-tag.active {
-            background: var(--primary-green);
-            color: #fff;
-            font-weight: bold;
-            box-shadow: 0 2px 4px rgba(46, 125, 50, 0.3);
-        }
-
-        /* Course Header */
-        .course-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 8px;
-            flex-shrink: 0;
-        }
-
-        .course-id {
-            font-size: 1.1rem;
-            font-weight: bold;
-            color: var(--primary-green);
-            background: var(--light-green);
-            padding: 4px 10px;
-            border-radius: 6px;
-        }
-
-        .course-title-group {
-            text-align: right;
-        }
-
-        .course-title {
-            font-size: 1.1rem;
-            font-weight: bold;
-            color: var(--text-dark);
-        }
-
-        .course-capacity {
-            font-size: 0.9rem;
-            color: var(--dark-green);
-            font-weight: bold;
-            margin-top: 2px;
-        }
-
-        /* Description & Hangman Area */
-        .desc-box {
-            background: #fcfdfc;
-            border: 1px dashed var(--accent-green);
-            border-radius: 8px;
-            padding: 10px 14px;
-            margin-bottom: 10px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            flex-shrink: 0;
-        }
-
-        .desc-text {
-            font-size: 0.85rem;
-            line-height: 1.5;
-            color: #2c3e50;
-            font-style: italic;
-            text-align: left;
-        }
-
-        .hangman-area {
-            margin-top: 10px;
-            padding-top: 8px;
-            border-top: 1px dotted #c8e6c9;
-            text-align: center;
-        }
-
-        .hangman-info {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 6px;
-            padding: 0 4px;
-        }
-
-        .hangman-status {
-            font-size: 0.8rem;
-            color: var(--text-muted);
-            font-weight: 500;
-        }
-
-        .tries-left {
-            font-size: 0.8rem;
-            color: #d32f2f;
-            font-weight: bold;
-        }
-
-        .word-display {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 4px;
-            font-size: 1.05rem;
-            font-family: monospace;
-            font-weight: bold;
-            color: var(--dark-green);
-            margin-bottom: 8px;
-        }
-
-        .word-row {
-            letter-spacing: 3px;
-        }
-
-        /* A-Z 按鈕固定為 2 行每行 13 個 */
-        .keyboard {
-            display: grid;
-            grid-template-columns: repeat(13, 1fr);
-            gap: 4px;
-            max-width: 100%;
-            margin: 0 auto;
-        }
-
-        .key-btn {
-            width: 100%;
-            height: 28px;
-            font-size: 0.75rem;
-            border: 1px solid #ccc;
-            background: #fff;
-            border-radius: 4px;
-            cursor: pointer;
-            font-weight: bold;
-            padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .key-btn:disabled {
-            background: #e0e0e0;
-            color: #aaa;
-            border-color: #ddd;
-            cursor: not-allowed;
-        }
-
-        .skip-btn {
-            font-size: 0.7rem;
-            background: #fff;
-            border: 1px solid var(--primary-green);
-            color: var(--primary-green);
-            padding: 2px 8px;
-            border-radius: 10px;
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-
-        .skip-btn:hover {
-            background: var(--light-green);
-        }
-
-        /* Gallery */
-        .photo-gallery {
-            display: flex;
-            gap: 8px;
-            justify-content: center;
-            align-items: center;
-            flex-wrap: wrap;
-            margin-top: 0;
-            flex-shrink: 0;
-        }
-
-        .photo-img {
-            max-width: 100%;
-            width: 170px;
-            height: 90px;
-            object-fit: cover;
-            border-radius: 6px;
-            border: 1px solid #ddd;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.08);
-        }
-
-        /* Registration Slide */
-        .reg-card {
-            background: #fff;
-            border: 2px solid var(--primary-green);
-            border-radius: 12px;
-            padding: 12px;
-            text-align: center;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-            max-width: 650px;
-            margin: 0 auto;
-        }
-
-        .qr-container {
-            width: 100px;
-            height: 100px;
-            margin: 8px auto;
-            border: 1px solid #ccc;
-            border-radius: 8px;
-            overflow: hidden;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: #fafafa;
-        }
-
-        .qr-container img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        .reg-link {
-            display: inline-block;
-            background: var(--primary-green);
-            color: white;
-            text-decoration: none;
-            padding: 6px 14px;
-            border-radius: 20px;
-            font-weight: bold;
-            font-size: 0.85rem;
-            margin: 4px 0;
-            word-break: break-all;
-        }
-
-        .reg-time {
-            color: #d32f2f;
-            font-weight: bold;
-            margin: 6px 0;
-            font-size: 0.8rem;
-        }
-
-        .reg-note-red {
-            font-size: 0.72rem;
-            color: #d32f2f;
-            font-weight: bold;
-            background: #ffebee;
-            padding: 8px;
-            border-radius: 6px;
-            border-left: 4px solid #d32f2f;
-            text-align: left;
-            line-height: 1.4;
-            margin-top: 8px;
-        }
-
-        /* Controls */
-        .controls {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            height: var(--nav-height);
-            background: #ffffff;
-            border-top: 1px solid #ddd;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 0 16px;
-            z-index: 100;
-            box-shadow: 0 -2px 8px rgba(0,0,0,0.05);
-        }
-
-        .nav-btn {
-            background: var(--primary-green);
-            color: white;
-            border: none;
-            padding: 8px 14px;
-            border-radius: 6px;
-            cursor: pointer;
-            font-size: 0.85rem;
-            font-weight: bold;
-        }
-
-        .nav-btn:disabled {
-            background: #ccc;
-            cursor: not-allowed;
-        }
-
-        .page-indicator {
-            font-size: 0.85rem;
-            color: var(--text-muted);
-            font-weight: bold;
-        }
-
-        .section-title {
-            font-size: 1.2rem;
-            color: var(--dark-green);
-            margin-bottom: 2px;
-            text-align: center;
-        }
-        .section-subtitle {
-            font-size: 0.85rem;
-            color: var(--primary-green);
-            margin-bottom: 10px;
-            text-align: center;
-            font-weight: 500;
-        }
-
-        /* Mobile RWD */
-        @media (max-width: 600px) {
-            body {
-                align-items: flex-start;
-            }
-
-            .slide-container {
-                height: 100vh;
-                max-height: 100vh;
-                border-radius: 0;
-            }
-
-            .slide {
-                height: calc(100vh - var(--nav-height));
-                max-height: calc(100vh - var(--nav-height));
-                padding: 10px;
-            }
-
-            /* 手機版：智能格子 2 欄對齊，維持等大 */
-            .intelligences-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-
-            /* 手機端日期卡片一列直落，相應調整高度與字型大小 */
-            .dates-container {
-                flex-direction: column;
-                gap: 8px;
-            }
-
-            .date-card {
-                width: 100%;
-                max-width: 240px;
-                height: 55px;
-                flex-direction: row;
-                justify-content: space-around;
-                padding: 0 12px;
-            }
-
-            .date-card .date { font-size: 0.95rem; }
-            .date-card .note { margin-top: 0; }
-
-            .course-id { font-size: 1rem; }
-            .course-title { font-size: 1rem; }
-            .course-capacity { font-size: 0.8rem; }
-
-            .intel-tag:not(.active) {
-                display: none;
-            }
-
-            .photo-img {
-                width: 48%;
-                height: 75px;
-            }
-
-            .key-btn {
-                height: 22px;
-                font-size: 0.6rem;
-            }
-
-            .controls {
-                position: fixed;
-                bottom: 0;
-                left: 0;
-                width: 100vw;
-            }
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>多元智能課 Multi-Intelligence Period</title>
+  <style>
+    :root {
+      --primary: #FF6B00;
+      --primary-light: #FFEAD8;
+      --primary-dark: #D95A00;
+      --bg-color: #F9F9F9;
+      --text-dark: #2C2C2C;
+      --card-bg: #FFFFFF;
+      --accent-game: #FF4500;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'PingFang TC', 'Microsoft JhengHei', 'Segoe UI', sans-serif;
+    }
+
+    body {
+      background-color: #1a1a1a;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      overflow: hidden;
+    }
+
+    /* 16:9 投影片容器 */
+    .deck-container {
+      width: 90vw;
+      height: 50.625vw;
+      max-width: 1280px;
+      max-height: 720px;
+      background-color: var(--bg-color);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+      border-radius: 12px;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* 投影片頁面 */
+    .slide {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.4s ease, transform 0.4s ease;
+      transform: translateX(20px);
+      padding: 40px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .slide.active {
+      opacity: 1;
+      visibility: visible;
+      transform: translateX(0);
+    }
+
+    /* 控制導航按鈕 */
+    .controls {
+      position: absolute;
+      bottom: 15px;
+      right: 20px;
+      z-index: 100;
+      display: flex;
+      gap: 10px;
+      align-items: center;
+    }
+
+    .btn {
+      background: var(--primary);
+      color: white;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 20px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: background 0.2s;
+    }
+
+    .btn:hover { background: var(--primary-dark); }
+    .btn:disabled { background: #ccc; cursor: not-allowed; }
+
+    .page-indicator {
+      font-size: 14px;
+      color: #666;
+      font-weight: bold;
+      background: rgba(255,255,255,0.8);
+      padding: 4px 12px;
+      border-radius: 12px;
+    }
+
+    /* 通用標題 */
+    .slide-title {
+      color: var(--primary-dark);
+      border-bottom: 4px solid var(--primary);
+      padding-bottom: 10px;
+      margin-bottom: 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+    }
+
+    .slide-title h1 { font-size: 2rem; }
+    .slide-title h2 { font-size: 1.2rem; color: #666; font-weight: normal; }
+
+    /* Part 1: 理論介紹 */
+    .mi-intro-container {
+      display: grid;
+      grid-template-columns: 1fr 2fr;
+      gap: 30px;
+      height: 100%;
+      align-items: center;
+    }
+
+    .mi-about {
+      background: var(--primary-light);
+      padding: 25px;
+      border-radius: 10px;
+      border-left: 6px solid var(--primary);
+    }
+
+    .mi-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 15px;
+    }
+
+    .mi-card {
+      background: white;
+      padding: 15px;
+      border-radius: 8px;
+      text-align: center;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+      border: 2px solid transparent;
+      font-weight: bold;
+      color: #444;
+    }
+
+    /* Part 2: 抽籤頁面 */
+    .lottery-box {
+      position: relative;
+      width: 100%;
+      height: 70%;
+      background: #FFF;
+      border: 2px dashed var(--primary);
+      border-radius: 10px;
+      overflow: hidden;
+      display: flex;
+      justify-content: center;
+    }
+
+    /* 學生飛舞樣式與動畫 */
+    .float-name-container {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      transition: opacity 0.5s ease;
+    }
+
+    .float-name {
+      position: absolute;
+      background: var(--primary-light);
+      color: var(--primary-dark);
+      padding: 2px 8px;
+      border-radius: 12px;
+      font-size: 0.75rem;
+      font-weight: bold;
+      white-space: nowrap;
+      animation: floatAround 6s infinite ease-in-out alternate;
+    }
+
+    @keyframes floatAround {
+      0% { transform: translate(0, 0) rotate(0deg); }
+      50% { transform: translate(25px, -30px) rotate(5deg); }
+      100% { transform: translate(-20px, 20px) rotate(-5deg); }
+    }
+
+    /* 大兜亂動畫樣式 */
+    .float-name.shuffling {
+      animation: none !important;
+      transition: all 0.08s linear;
+      background: var(--primary);
+      color: white;
+    }
+
+    /* 抽籤結果單一直列呈現 */
+    .lottery-result-column {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      padding: 15px;
+      width: 100%;
+      max-width: 320px;
+      overflow-y: auto;
+      z-index: 2;
+    }
+
+    .lottery-result-column .item {
+      width: 100%;
+      text-align: center;
+      background: var(--primary-light);
+      color: var(--primary-dark);
+      padding: 8px 0;
+      border-radius: 6px;
+      font-weight: bold;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+      animation: flyIn 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+    }
+
+    /* 名字飛入直列的動畫 */
+    @keyframes flyIn {
+      from { opacity: 0; transform: translateY(-20px) scale(1.1); }
+      to { opacity: 1; transform: translateY(0) scale(1); }
+    }
+
+    /* Jump the Queue! 圖片頁面 (1:1) */
+    .img-page-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 80%;
+    }
+
+    .square-img-holder {
+      width: 380px;
+      height: 380px;
+      border: 3px dashed var(--primary);
+      background: #EEE;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: #888;
+      font-weight: bold;
+      border-radius: 12px;
+      overflow: hidden;
+    }
+
+    .square-img-holder img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 10px;
+    }
+
+    /* Part 3: 課程頁面 Layout */
+    .course-layout {
+      display: grid;
+      grid-template-columns: 260px 1fr;
+      gap: 25px;
+      height: calc(100% - 60px);
+    }
+
+    .slide.game-style {
+      background-color: #FFF8F0;
+      border: 4px solid var(--accent-game);
+    }
+    .slide.game-style .course-header {
+      color: var(--accent-game);
+    }
+    .slide.game-style .game-badge {
+      display: inline-block;
+      background: var(--accent-game);
+      color: white;
+      padding: 2px 8px;
+      font-size: 0.8rem;
+      border-radius: 4px;
+      margin-left: 10px;
+    }
+
+    .mi-sidebar {
+      background: white;
+      padding: 15px;
+      border-radius: 10px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    }
+
+    .mi-sidebar-item {
+      padding: 8px 12px;
+      border-radius: 6px;
+      font-size: 0.85rem;
+      color: #AAA;
+      background: #F5F5F5;
+      transition: all 0.3s;
+    }
+
+    .mi-sidebar-item.active {
+      background: var(--primary);
+      color: white;
+      font-weight: bold;
+      transform: scale(1.02);
+      box-shadow: 0 2px 6px rgba(255, 107, 0, 0.4);
+    }
+
+    .course-main {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      cursor: pointer;
+    }
+
+    .course-header {
+      font-size: 2rem;
+      font-weight: bold;
+      color: var(--primary-dark);
+      display: flex;
+      align-items: center;
+    }
+
+    .course-desc {
+      background: white;
+      padding: 15px;
+      border-radius: 8px;
+      border-left: 4px solid var(--primary);
+      font-size: 1.05rem;
+      line-height: 1.5;
+      color: #444;
+      font-style: italic;
+    }
+
+    /* blur: 5px 及 2s 平滑過渡動畫 */
+    .reveal-section {
+      opacity: 0.2;
+      filter: blur(5px);
+      transition: all 2s ease;
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      flex-grow: 1;
+    }
+
+    .reveal-section.revealed {
+      opacity: 1;
+      filter: blur(0);
+    }
+
+    .course-info-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: var(--primary-light);
+      padding: 10px 20px;
+      border-radius: 8px;
+    }
+
+    .course-name {
+      font-size: 1.3rem;
+      font-weight: bold;
+      color: var(--text-dark);
+    }
+
+    .course-quota {
+      font-size: 1.2rem;
+      font-weight: bold;
+      color: var(--primary-dark);
+    }
+
+    .course-gallery {
+      display: flex;
+      gap: 15px;
+      height: 180px;
+    }
+
+    .course-gallery img {
+      flex: 1;
+      width: 0; /* 讓 flex 均分寬度 */
+      height: 100%;
+      object-fit: cover;
+      border-radius: 8px;
+      background: #DDD;
+    }
+  </style>
 </head>
 <body>
 
-<div class="slide-container">
-    
-    <!-- Slide 1: Cover -->
-    <div class="slide active title-slide">
-        <span class="badge">2026-2027 T1 S4-S6</span>
-        <h1>多元智能課</h1>
-        <h2>Multi-Intelligence Period</h2>
-        <p style="color: var(--text-muted); font-size: 0.85rem;">請使用下方按鈕或鍵盤左右鍵翻頁 <br> Use navigation buttons or arrow keys to browse</p>
+<div class="deck-container" id="deck">
+  <div class="controls">
+    <button class="btn" id="prevBtn" onclick="changeSlide(-1)">❮ 上一頁</button>
+    <span class="page-indicator" id="pageIndicator">1 / 18</span>
+    <button class="btn" id="nextBtn" onclick="changeSlide(1)">下一頁 ❯</button>
+  </div>
+
+  <div class="slide active">
+    <div style="text-align: center; margin: auto 0;">
+      <h1 style="font-size: 3.5rem; color: var(--primary-dark); margin-bottom: 10px;">多元智能課</h1>
+      <h2 style="font-size: 2rem; color: #666;">Multi-Intelligence Period</h2>
+      <p style="margin-top: 40px; color: #888;">請使用下方按鈕或鍵盤左右鍵切換頁面</p>
     </div>
+  </div>
 
-    <!-- Slide 2: Theory -->
-    <div class="slide">
-        <div class="section-title">多元智能理論</div>
-        <div class="section-subtitle">Theory of Multiple Intelligences</div>
-        <div class="theory-intro">
-            由美國哈佛大學心理學家霍華德·加德納（Howard Gardner）於1983年提出的教育與心理學理論。
-        </div>
-        <div class="intelligences-grid">
-            <div class="intel-card"><div class="zh">語言智能</div><div class="en">Linguistic</div></div>
-            <div class="intel-card"><div class="zh">邏輯數學智能</div><div class="en">Logical-Math</div></div>
-            <div class="intel-card"><div class="zh">空間智能</div><div class="en">Spatial</div></div>
-            <div class="intel-card"><div class="zh">音樂智能</div><div class="en">Musical</div></div>
-            <div class="intel-card"><div class="zh">肢體動覺智能</div><div class="en">Kinesthetic</div></div>
-            <div class="intel-card"><div class="zh">人際智能</div><div class="en">Interpersonal</div></div>
-            <div class="intel-card"><div class="zh">內省智能</div><div class="en">Intrapersonal</div></div>
-            <div class="intel-card"><div class="zh">自然觀察智能</div><div class="en">Naturalist</div></div>
-        </div>
+  <div class="slide">
+    <div class="slide-title">
+      <h1>多元智能理論</h1>
+      <h2>Theory of Multiple Intelligences</h2>
     </div>
-
-    <!-- Slide 3: Dates (更新為英文日期格式) -->
-    <div class="slide">
-        <div class="section-title">多元智能課日期</div>
-        <div class="section-subtitle">Multi-Intelligence Period Dates</div>
-        <div class="dates-container">
-            <div class="date-card"><div class="date">17th September</div></div>
-            <div class="date-card"><div class="date">15th October</div></div>
-            <div class="date-card">
-                <div class="date">29th October</div>
-                <div class="note">*中六除外<br>*Except S6</div>
-            </div>
-            <div class="date-card"><div class="date">19th November</div></div>
-            <div class="date-card"><div class="date">10th December</div></div>
-        </div>
+    <div class="mi-intro-container">
+      <div class="mi-about">
+        <h3>Howard Gardner (1983)</h3>
+        <p style="margin-top: 10px; line-height: 1.6; color: #444;">
+          由美國哈佛大學心理學家霍華德·加德納提出的教育與心理學理論。主張人類的智能是多元化的，非單一智商指數所能涵蓋。
+        </p>
+      </div>
+      <div class="mi-grid" id="mainMiGrid"></div>
     </div>
+  </div>
 
-    <!-- Registration Slide -->
-    <div class="slide" id="registration-slide">
-        <div class="section-title">網上報名詳情</div>
-        <div class="section-subtitle">Online Registration Details</div>
-        <div class="reg-card">
-            <h3 style="color: var(--dark-green); margin-bottom: 2px;">網上報名 ‧ 先到先得</h3>
-            <p style="color: var(--primary-green); font-size: 0.85rem;">Apply online ‧ First come, first served</p>
-            
-            <div class="reg-time">
-                Registration Period from 3rd September (Thu) 20:00 to 4th September (Fri) 16:00
-            </div>
-
-            <div class="qr-container">
-                <img src="qrcode.png" alt="QR Code" onerror="this.onerror=null; this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'100\' height=\'100\'><rect width=\'100%\' height=\'100%\' fill=\'%23eee\'/><text x=\'50%\' y=\'50%\' font-size=\'10\' fill=\'%23888\' text-anchor=\'middle\' dy=\'.3em\'>qrcode.jpg</text></svg>';">
-            </div>
-
-            <a href="https://forms.cloud.microsoft/r/Xk9bJAXDpm" target="_blank" class="reg-link">報名連結 / Registration Link</a>
-
-            <div class="reg-note-red">
-                請登入學校 Microsoft 帳戶 (@chusheklun.edu.hk) 填寫，如未能順利登入可嘗試以「無痕模式」開啟連結。你可以預先到 <a href="https://account.microsoft.com/" target="_blank" style="color:#d32f2f; text-decoration:underline;">https://account.microsoft.com/</a> 測試登入。<br>
-                Please log in to your school Microsoft account (@chusheklun.edu.hk). You may try to browse in "incognito mode" in case of log in failure. Test log in at <a href="https://account.microsoft.com/" target="_blank" style="color:#d32f2f; text-decoration:underline;">https://account.microsoft.com/</a> in advance.
-            </div>
-        </div>
+  <div class="slide">
+    <div class="slide-title">
+      <h1>學生次序抽籤</h1>
+      <h2>Student Sequence Lottery</h2>
     </div>
-
-    <!-- Controls -->
-    <div class="controls">
-        <button class="nav-btn" id="prev-btn" onclick="changeSlide(-1)">上一頁 Prev</button>
-        <span class="page-indicator" id="page-indicator">1 / 21</span>
-        <button class="nav-btn" id="next-btn" onclick="changeSlide(1)">下一頁 Next</button>
+    <div style="display: flex; gap: 10px; margin-bottom: 10px;">
+      <button class="btn" id="drawBtn" onclick="runLotteryAnimation()">開始抽籤 Start Draw</button>
+      <button class="btn" style="background:#555;" onclick="copyLotteryResult()">複製結果 Copy List</button>
+      <span id="lotteryStatus" style="align-self: center; color: var(--primary-dark); font-weight: bold;"></span>
     </div>
+    <div class="lottery-box" id="lotteryBox"></div>
+  </div>
+
+  <div class="slide">
+    <div class="slide-title">
+      <h1>Jump the Queue!</h1>
+      <h2>Jump the Queue!</h2>
+    </div>
+    <div class="img-page-container">
+      <div class="square-img-holder">
+        <img src="jumpthequeue.jpg" alt="Jump the Queue!">
+      </div>
+    </div>
+  </div>
 
 </div>
 
 <script>
-    const ALL_INTELS = [
-        { zh: "語言智能", en: "Linguistic" },
-        { zh: "邏輯數學智能", en: "Logical-Math" },
-        { zh: "空間智能", en: "Spatial" },
-        { zh: "音樂智能", en: "Musical" },
-        { zh: "肢體動覺智能", en: "Kinesthetic" },
-        { zh: "人際智能", en: "Interpersonal" },
-        { zh: "內省智能", en: "Intrapersonal" },
-        { zh: "自然觀察智能", en: "Naturalist" }
-    ];
+  // 269 位學生真實名單
+  const STUDENT_LIST = [
+    "1A 01 畢芷澄", "1A 02 陳嘉奇", "1A 03 張卓賢", "1A 05 香浩霖", "1A 06 許少傑", "1A 07 李青頤", "1A 08 李鈺滢", "1A 09 梁豪", "1A 10 林騰滿", "1A 11 劉永曦", "1A 12 呂國豪", "1A 13 莫子銘", "1A 14 莫耀嵐", "1A 15 丁駿峯", "1A 16 鄧嘉翹", "1A 17 鄭兆晴", "1A 18 王澤興", "1A 19 黃阡鋒", "1A 20 吴守熠", "1A 21 謝益瀚", "1A 22 薛詩甜", "1A 23 丘振宏", "1A 24 楊皓程", "1A 25 楊欣妍", "1A 26 姚敏兒", "1A 27 周智恒",
+    "1B 01 陳泓濼", "1B 02 陳司翰", "1B 03 鄭凱柔", "1B 04 張倩晴", "1B 05 丁一研", "1B 06 馮婷欣", "1B 07 黃紫鏇", "1B 08 姜皓嘉", "1B 09 劉恩麒", "1B 10 劉容君", "1B 11 李宇軒", "1B 12 李梓杰", "1B 13 林奕昀", "1B 14 林彥伽", "1B 15 孟原丞", "1B 16 莫濬熙", "1B 17 覃梓茵", "1B 18 蕭恩翰", "1B 19 司徒子琰", "1B 20 黃佩萱", "1B 21 楊家雨", "1B 22 楊晴", "1B 23 叶彥烽", "1B 24 葉梓唯", "1B 25 余一凡", "1B 26 張天瑜", "1B 27 張子駿", "1B 28 鄭暉瀚",
+    "1C 01 陳靜思", "1C 02 陳紫晴", "1C 03 陳雨芯", "1C 04 黃梓莹", "1C 05 關凱文", "1C 06 賴瑋弘", "1C 07 林依辰", "1C 08 李嘉敏", "1C 09 李安琪", "1C 10 劉詩萱", "1C 11 吳俊熙", "1C 12 黃千盈", "1C 13 黃家樂", "1C 14 姚倫蒙", "1C 15 葉鎮揚", "1C 16 余雨林", "1C 17 李清婷", "1C 18 陳洛妍",
+    "1D 01 AHMED Hadi Ali", "1D 02 BIBI Ayesha", "1D 03 MAGNO HAFSAH", "1D 04 MEHMOOD Arslan", "1D 05 MOHAMMAD Hasan", "1D 06 MOHAMMAD Sufiyan", "1D 07 MOHAMMAD-HASHIM", "1D 08 MUHAMMAD Abdul Hadi", "1D 09 RAI Emaan", "1D 10 SAID Mohammad Ishaq", "1D 11 SHAH Rumesha", "1D 12 ZAMAN Abu Bakar",
+    "2A 01 蔡妙佳", "2A 02 湛天楠", "2A 03 陳玘", "2A 04 張紫恩", "2A 05 徐啓恒", "2A 06 杜崇鑫", "2A 07 郭嬿琪", "2A 08 黃湘朗", "2A 09 黃煜琳", "2A 10 柯歆彤", "2A 11 梁梓昕", "2A 12 李峻熙", "2A 13 李思琪", "2A 17 譚栩鋒", "2A 18 王俊杰", "2A 19 汪可心", "2A 20 黃梓睿", "2A 21 吳佳檸", "2A 22 吳佳杺", "2A 23 徐境遠", "2A 25 叶子軒", "2A 26 余晉僑", "2A 27 余文婧", "2A 28 虞子妍", "2A 29 丘雨",
+    "2B 01 蔡泓鍵", "2B 02 鍾咏棋", "2B 03 郭睿霖", "2B 04 何超偉", "2B 05 何泉穎", "2B 06 黎鴻熙", "2B 07 劉柏庭", "2B 08 李玥彤", "2B 09 李嘉譽", "2B 10 李藝康", "2B 11 廖凱俊", "2B 12 羅浚柏", "2B 13 羅穎鋒", "2B 14 呂明擇", "2B 15 丘云騰", "2B 16 佘鴻燊", "2B 17 施淨闌", "2B 18 田妙涵", "2B 19 王昭俊", "2B 20 黃科鉶", "2B 21 續云騫", "2B 22 嚴紫梆", "2B 23 姚永康", "2B 24 張嘉熙", "2B 25 鄭楚皓", "2B 26 鍾秉剛",
+    "2C 01 蔡雨潼", "2C 02 曹雅婷", "2C 03 黃港棟", "2C 04 廖慧穎", "2C 05 林俊諭", "2C 06 凌子嵐", "2C 07 廖凱韜", "2C 08 劉佳炘", "2C 09 羅浩林", "2C 10 吳晉軒", "2C 11 彭宇軒", "2C 12 潘韋龍", "2C 13 施桂茵", "2C 14 王寶葳", "2C 15 黃靖城", "2C 16 吳國源",
+    "2D 01 ALE MAGAR Subilina", "2D 02 AREFIN Mohammed", "2D 03 ASHFAQ Mohammad Hussain", "2D 04 ASHFAQ Mohammad Saad", "2D 05 BEBI Khadija", "2D 06 BHUJEL Sarim", "2D 07 BRAR Parneet Kaur", "2D 08 HASAAN Muhammad", "2D 09 IRFAN Muhammad Isa", "2D 10 KHAN Ibrahim Duguran", "2D 11 KHAN Muhammad Mudassar", "2D 12 MUHAMMAD Uzaifa", "2D 13 MURTAZA Saleha", "2D 14 RAISAT Tashfa", "2D 15 RANA Lion", "2D 16 SHAZADI Mahnoor", "2D 17 SYED Saad Ali Shah", "2D 18 TANVIR Aneeda", "2D 19 KHAN Sahil",
+    "3A 01 白朗", "3A 02 陳春林", "3A 03 陳韵菲", "3A 04 張紀陶", "3A 05 趙天瑜", "3A 06 許嘉瑩", "3A 07 許婷婷", "3A 08 管梓灝", "3A 09 林海晴", "3A 10 林灝", "3A 11 李嘉瑩", "3A 12 梁嘉祺", "3A 13 梁立言", "3A 14 李澤楷", "3A 15 李楚莹", "3A 16 李燊煒", "3A 17 李林茗", "3A 18 林晨", "3A 19 林晋鵬", "3A 20 潘孜涵", "3A 21 蘇樂蕎", "3A 22 施博峻", "3A 23 譚凱心", "3A 24 唐新越", "3A 25 曾凌萱", "3A 26 王子霖", "3A 27 項爍文", "3A 28 許曉豐", "3A 29 葉嘉熙", "3A 30 庾稚媛", "3A 31 周楚涵", "3A 32 丘然",
+    "3B 01 陳家謙", "3B 02 陳衛家明", "3B 03 陳汝丞", "3B 04 陳鈞澤", "3B 05 程博昊", "3B 06 鄭景桐", "3B 07 張依琪", "3B 08 戚菘玲", "3B 09 何彦彤", "3B 10 蔣大友", "3B 11 高浚皓", "3B 12 林洛帆", "3B 13 林穎倩", "3B 14 李宗燁", "3B 15 林佳義", "3B 16 林思儒", "3B 17 伍承熙", "3B 18 吳梓柔", "3B 19 潘信羲", "3B 20 施鍇鑫", "3B 21 譚文進", "3B 22 鄧子灝", "3B 23 唐梓維", "3B 24 温雅湳", "3B 25 吳瀚霖", "3B 26 吳詩炫", "3B 27 熊子沖", "3B 28 甄柏澔", "3B 29 余浩龍", "3B 30 余嘉俊", "3B 31 張美莉", "3B 32 周思霏",
+    "3C 01 周容樂", "3C 02 鄭進興", "3C 03 張可瀅", "3C 04 張琅", "3C 05 郭浩文", "3C 06 林國智", "3C 07 李法拉", "3C 08 李凱華", "3C 09 李梓軒", "3C 10 林杏鏇", "3C 11 劉怡聰", "3C 12 吳浚民", "3C 13 冼朗", "3C 14 田芳駿", "3C 15 謝沛京", "3C 16 王覺眾", "3C 17 吳穎珊", "3C 18 嚴紫霞",
+    "3D 01 ABID Zenia", "3D 02 AHSAN Mahnoor", "3D 03 BRAR Harbeer", "3D 04 BRAR Harserat", "3D 05 HAMZA Nawaz", "3D 06 HUSSAIN Saad Niaz", "3D 07 HUZAIFA Muhammad", "3D 08 KHALID Khan Zoya", "3D 09 KHAN Muhammad Hassam", "3D 10 KHAN Muhammad Sufiyan", "3D 11 MOHAMMAD Irtaza", "3D 12 NASEEM Saadia", "3D 13 SANA Bibi", "3D 14 SOHAL Anoopjot Singh", "3D 15 ZAYAN Muhammad", "3D 16 KAUR Jasveer", "3D 17 MANZIL Abbas"
+  ];
 
-    const coursesData = [
-        { id: "S01", titleZh: "閱讀", titleEn: "Reading", cap: "👤 25", intels: ["語言智能", "內省智能"], desc: ["Learners carefully study printed pages filled with stories and facts.", "They gradually build stronger understanding of words and ideas."], photos: 2, hasHangman: true },
-        { id: "S02", titleZh: "Phonics", titleEn: "Phonics", cap: "👤 20", intels: ["語言智能"], desc: ["Students practise matching sounds with written symbols.", "They learn to blend these sounds into complete words."], photos: 1, hasHangman: true },
-        { id: "S03", titleZh: "普通話演講班", titleEn: "Putonghua Speech Class", cap: "👤 20", intels: ["語言智能"], desc: ["Students practise clear pronunciation while delivering prepared talks.", "They organise ideas and speak confidently in front of others."], photos: 1, hasHangman: false },
-        { id: "S04", titleZh: "國際象棋", titleEn: "Chess", cap: "👤 16", intels: ["邏輯數學智能"], desc: ["Players move distinct pieces across a checkered board according to fixed rules.", "Careful planning and foresight help one side gain an advantage."], photos: 2, hasHangman: true },
-        { id: "S05", titleZh: "桌上遊戲", titleEn: "Board Games", cap: "👤 24", intels: ["邏輯數學智能", "人際智能"], desc: ["Groups sit together and take turns following shared rules.", "Friendly competition encourages thinking ahead and adapting strategies."], photos: 2, hasHangman: true },
-        { id: "S06", titleZh: "MakeX 機械人", titleEn: "MakeX Robots", cap: "👤 15", intels: ["邏輯數學智能"], desc: ["Teams design and programme machines to complete specific challenges.", "Logical thinking and precise control determine success in each task."], photos: 1, hasHangman: false },
-        { id: "S07", titleZh: "英式桌球", titleEn: "Snooker", cap: "👤 12", intels: ["邏輯數學智能", "空間智能", "肢體動覺智能"], desc: ["Players use a long cue to strike balls into pockets on a large table.", "Calculating angles and force helps achieve accurate shots."], photos: 2, hasHangman: true },
-        { id: "S08", titleZh: "花藝", titleEn: "Flower Arrangement", cap: "👤 18", intels: ["空間智能", "自然觀察智能"], desc: ["Participants select and position blooms to create balanced visual designs.", "They consider colour, shape and proportion in every composition."], photos: 2, hasHangman: true },
-        { id: "S09", titleZh: "皮革製作", titleEn: "Leather Craft", cap: "👤 20", intels: ["空間智能"], desc: ["People cut and shape durable material into useful or decorative items.", "Careful measuring and stitching produce well-formed finished pieces."], photos: 2, hasHangman: true },
-        { id: "S10", titleZh: "黏土製作 / 陶藝工作坊", titleEn: "Clay Making / Pottery Workshop", cap: "👤 20", intels: ["空間智能"], desc: ["Learners mould soft material into three-dimensional forms with their hands.", "They refine shapes and surfaces before the pieces are hardened."], photos: 1, hasHangman: false },
-        { id: "S11", titleZh: "攝影", titleEn: "Photography", cap: "👤 20", intels: ["空間智能"], desc: ["Individuals capture interesting scenes through a lens.", "They adjust light and angle to create clear visual records."], photos: 2, hasHangman: true },
-        { id: "S12", titleZh: "流行聲樂技巧", titleEn: "Popular Vocal Techniques", cap: "👤 15", intels: ["音樂智能"], desc: ["Singers practise controlling pitch, breath and tone quality.", "They develop expressive ways to deliver contemporary songs."], photos: 1, hasHangman: false },
-        { id: "S13", titleZh: "健身入門", titleEn: "Gym Beginner", cap: "👤 16", intels: ["肢體動覺智能", "內省智能"], desc: ["Newcomers practise basic movements to strengthen the body.", "Regular sessions improve endurance, balance and overall fitness."], photos: 2, hasHangman: false },
-        { id: "S14", titleZh: "跆拳道", titleEn: "Taekwondo", cap: "👤 20", intels: ["肢體動覺智能"], desc: ["Trainees learn precise kicks, blocks and strikes in a structured system.", "Proper stance and timing build power and self-control."], photos: 2, hasHangman: true },
-        { id: "S15", titleZh: "腰旗美式足球", titleEn: "Flag Football", cap: "👤 22", intels: ["肢體動覺智能", "人際智能"], desc: ["Players run, pass and evade opponents while protecting a small flag.", "Team coordination and quick physical reactions decide each play."], photos: 2, hasHangman: false },
-        { id: "S16", titleZh: "烘焙班", titleEn: "Baking Class", cap: "👤 20", intels: ["自然觀察智能"], desc: ["Learners mix ingredients and apply heat to create edible results.", "Precise measurements and timing affect the final texture and taste."], photos: 1, hasHangman: true },
-        { id: "S17", titleZh: "智能飼養", titleEn: "Hermetia Illucens Breeding", cap: "👤 15", intels: ["自然觀察智能"], desc: ["Keepers provide organic waste as food for growing larvae.", "They observe the life cycle and collect useful by-products from the process."], photos: 1, hasHangman: false }
-    ];
+  const MI_LIST = [
+    { zh: '語言智能', en: 'Linguistic' },
+    { zh: '邏輯數學智能', en: 'Logical-Mathematical' },
+    { zh: '空間智能', en: 'Spatial' },
+    { zh: '音樂智能', en: 'Musical' },
+    { zh: '肢體動覺智能', en: 'Bodily-Kinesthetic' },
+    { zh: '人際智能', en: 'Interpersonal' },
+    { zh: '內省智能', en: 'Intrapersonal' },
+    { zh: '自然觀察智能', en: 'Naturalist' }
+  ];
 
-    const regSlide = document.getElementById('registration-slide');
-    const container = document.querySelector('.slide-container');
+  const COURSES = [
+    { id: "J01", nameZh: "閱讀", nameEn: "Reading", quota: 25, isGame: false, mi: ["語言智能", "內省智能"], imgCount: 2, desc: ["Learners carefully study printed pages filled with stories and facts.", "They gradually build stronger understanding of words and ideas."] },
+    { id: "J02", nameZh: "Phonics", nameEn: "Phonics", quota: 20, isGame: false, mi: ["語言智能"], imgCount: 1, desc: ["Students practise matching sounds with written symbols.", "They learn to blend these sounds into complete words."] },
+    { id: "J03", nameZh: "普通話戲劇班", nameEn: "Putonghua Drama Class", quota: 20, isGame: false, mi: ["語言智能", "人際智能"], imgCount: 3, desc: ["Students speak lines clearly while acting out different roles.", "They express emotions through spoken dialogue in Chinese."] },
+    { id: "J04", nameZh: "書法", nameEn: "Calligraphy", quota: 20, isGame: true, mi: ["語言智能", "內省智能"], imgCount: 2, desc: ["Participants form elegant characters on paper.", "Steady hand control creates beautiful and balanced written forms."] },
+    { id: "J05", nameZh: "國際象棋", nameEn: "Chess", quota: 16, isGame: false, mi: ["邏輯數學智能"], imgCount: 1, desc: ["Players move distinct pieces across a checkered board according to fixed rules.", "Careful planning and foresight help one side gain an advantage."] },
+    { id: "J06", nameZh: "桌上遊戲", nameEn: "Board Games", quota: 20, isGame: true, mi: ["邏輯數學智能", "人際智能"], imgCount: 2, desc: ["Groups sit together and take turns following shared rules.", "Friendly competition encourages thinking ahead and adapting strategies."] },
+    { id: "J07", nameZh: "機甲大師", nameEn: "RoboMaster", quota: 15, isGame: false, mi: ["邏輯數學智能", "人際智能"], imgCount: 3, desc: ["Teams design and control small machines that complete set tasks.", "Logical programming and quick decisions decide the final outcome."] },
+    { id: "J08", nameZh: "模型製作", nameEn: "Model Making", quota: 20, isGame: false, mi: ["空間智能"], imgCount: 2, desc: ["People assemble small parts step by step into complete three-dimensional forms.", "Careful measuring and fitting produce accurate miniature versions."] },
+    { id: "J09", nameZh: "攝影", nameEn: "Photography", quota: 15, isGame: true, mi: ["空間智能"], imgCount: 2, desc: ["Individuals capture interesting scenes through a lens.", "They adjust light and angle to create clear visual records."] },
+    { id: "J10", nameZh: "魔術", nameEn: "Magic", quota: 20, isGame: false, mi: ["空間智能"], imgCount: 2, desc: ["Performers use quick hand movements to create surprising visual effects.", "Spectators watch closely as ordinary objects appear to change."] },
+    { id: "J11", nameZh: "健身入門", nameEn: "Gym Beginner", quota: 10, isGame: true, mi: ["肢體動覺智能"], imgCount: 2, desc: ["Students practise basic movements to strengthen the body.", "Regular sessions improve endurance, balance and overall fitness."] },
+    { id: "J12", nameZh: "泰拳", nameEn: "Muaythai", quota: 16, isGame: false, mi: ["肢體動覺智能"], imgCount: 2, desc: ["Trainees learn controlled strikes using fists, elbows, knees and shins.", "Proper stance and timing protect the body while delivering power."] },
+    { id: "J13", nameZh: "雜耍", nameEn: "Juggling", quota: 20, isGame: true, mi: ["肢體動覺智能"], imgCount: 1, desc: ["People keep several objects moving through the air in a steady rhythm.", "Hand-eye coordination allows continuous tossing and catching."] },
+    { id: "J14", nameZh: "烘焙班", nameEn: "Baking Class", quota: 20, isGame: false, mi: ["肢體動覺智能", "自然觀察智能"], imgCount: 2, desc: ["Learners mix ingredients and apply heat to create edible results.", "Precise measurements and timing affect the final texture and taste."] },
+    { id: "J15", nameZh: "智能飼養", nameEn: "Hermetia Illucens Breeding", quota: 20, isGame: false, mi: ["自然觀察智能"], imgCount: 2, desc: ["Keepers provide organic waste as food for growing larvae.", "They observe the life cycle and collect useful by-products from the process."] }
+  ];
 
-    coursesData.forEach((course, idx) => {
-        const slideDiv = document.createElement('div');
-        slideDiv.className = 'slide course-slide';
-        slideDiv.dataset.courseIndex = idx;
+  let currentSlide = 0;
+  let totalSlides = 0;
+  let lotteryData = [];
 
-        let navHtml = '<div class="intel-nav-bar">';
-        ALL_INTELS.forEach(intel => {
-            const isActive = course.intels.includes(intel.zh) ? 'active' : '';
-            navHtml += `<div class="intel-tag ${isActive}">${intel.zh}<br>${intel.en}</div>`;
-        });
-        navHtml += '</div>';
+  function initDeck() {
+    const mainMiGrid = document.getElementById('mainMiGrid');
+    MI_LIST.forEach(item => {
+      mainMiGrid.innerHTML += `
+        <div class="mi-card">
+          <div>${item.zh}</div>
+          <div style="font-size: 0.75rem; color: #888;">${item.en}</div>
+        </div>
+      `;
+    });
 
-        const headerHtml = `
+    const deck = document.getElementById('deck');
+    COURSES.forEach(course => {
+      const slideDiv = document.createElement('div');
+      slideDiv.className = `slide ${course.isGame ? 'game-style' : ''}`;
+      
+      let sidebarHtml = '<div class="mi-sidebar">';
+      MI_LIST.forEach(m => {
+        const isActive = course.mi.includes(m.zh) ? 'active' : '';
+        sidebarHtml += `<div class="mi-sidebar-item ${isActive}">${m.zh}<br><small>${m.en}</small></div>`;
+      });
+      sidebarHtml += '</div>';
+
+      // 動態生成課程圖片標籤（例如 J01-1.jpg, J01-2.jpg）
+      let imgsHtml = '';
+      for(let i = 1; i <= course.imgCount; i++) {
+        const imgName = `${course.id}-${i}.jpg`;
+        imgsHtml += `<img src="${imgName}" alt="${course.nameZh} ${i}">`;
+      }
+
+      slideDiv.innerHTML = `
+        <div class="slide-title">
+          <h1>課程項目</h1>
+          <h2>Course Overview</h2>
+        </div>
+        <div class="course-layout">
+          ${sidebarHtml}
+          <div class="course-main" onclick="revealCourse(this)">
             <div class="course-header">
-                <div class="course-id">${course.id}</div>
-                <div class="course-title-group">
-                    <div class="course-title" id="title-${course.id}">${course.hasHangman ? '❓ ???' : `${course.titleZh} ${course.titleEn}`}</div>
-                    <div class="course-capacity">${course.cap}</div>
-                </div>
+              ${course.id}
+              ${course.isGame ? '<span class="game-badge"> 🙋🏿‍♀️🙋🏿‍♂️🙋🏿 </span>' : ''}
             </div>
-        `;
-
-        const descHtml = `
-            <div class="desc-box">
-                <div class="desc-text">
-                    <p>${course.desc[0]}</p>
-                    <p style="margin-top:4px;">${course.desc[1]}</p>
-                </div>
-                ${course.hasHangman ? `
-                    <div class="hangman-area">
-                        <div class="hangman-info">
-                            <span class="hangman-status">猜猜英文名 Guess:</span>
-                            <span class="tries-left" id="tries-${course.id}">機會 Tries: 6</span>
-                        </div>
-                        <div class="word-display" id="display-${course.id}"></div>
-                        <div class="keyboard" id="kb-${course.id}"></div>
-                        <div style="text-align: center; margin-top: 6px;">
-                            <button class="skip-btn" onclick="skipHangman('${course.id}')">跳過猜謎 Skip</button>
-                        </div>
-                    </div>
-                ` : ''}
+            <div class="course-desc">
+              ${course.desc[0]}<br>${course.desc[1]}
             </div>
-        `;
-
-        let photosHtml = '<div class="photo-gallery">';
-        for (let p = 1; p <= course.photos; p++) {
-            const imgSrc = `${course.id}_0${p}.jpg`;
-            photosHtml += `<img src="${imgSrc}" alt="${course.titleZh} 相片 ${p}" class="photo-img" onerror="this.onerror=null; this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'170\' height=\'90\'><rect width=\'100%\' height=\'100%\' fill=\'%23e0e0e0\'/><text x=\'50%\' y=\'50%\' font-size=\'10\' fill=\'%23777\' text-anchor=\'middle\' dy=\'.3em\'>${imgSrc}</text></svg>';">`;
-        }
-        photosHtml += '</div>';
-
-        slideDiv.innerHTML = navHtml + headerHtml + descHtml + photosHtml;
-        container.insertBefore(slideDiv, regSlide);
+            <div class="reveal-section">
+              <div class="course-info-bar">
+                <div class="course-name">${course.nameZh} ${course.nameEn}</div>
+                <div class="course-quota">👤 ${course.quota}</div>
+              </div>
+              <div class="course-gallery">
+                ${imgsHtml}
+              </div>
+            </div>
+          </div>
+        </div>
+      `;
+      deck.appendChild(slideDiv);
     });
 
-    let currentSlide = 0;
-    let slides = [];
-    const hangmanStates = {};
+    const slides = document.querySelectorAll('.slide');
+    totalSlides = slides.length;
+    updatePageIndicator();
+    initLotteryNames();
+  }
 
-    function initHangman(course) {
-        if (!course.hasHangman) return;
-        
-        const targetWord = course.titleEn.toUpperCase();
-        let guessedLetters = new Set();
-        let maxTries = 6;
-        let wrongTries = 0;
+  function showSlide(index) {
+    const slides = document.querySelectorAll('.slide');
+    if (index < 0 || index >= totalSlides) return;
+    
+    slides[currentSlide].classList.remove('active');
+    currentSlide = index;
+    slides[currentSlide].classList.add('active');
+    
+    document.getElementById('prevBtn').disabled = (currentSlide === 0);
+    document.getElementById('nextBtn').disabled = (currentSlide === totalSlides - 1);
+    updatePageIndicator();
+  }
 
-        hangmanStates[course.id] = {
-            targetWord,
-            guessedLetters,
-            maxTries,
-            wrongTries,
-            solved: false,
-            course
-        };
+  function changeSlide(direction) {
+    showSlide(currentSlide + direction);
+  }
 
-        renderHangman(course.id);
-    }
+  function updatePageIndicator() {
+    document.getElementById('pageIndicator').innerText = `${currentSlide + 1} / ${totalSlides}`;
+  }
 
-    function renderHangman(courseId) {
-        const state = hangmanStates[courseId];
-        if (!state) return;
+  function revealCourse(element) {
+    const section = element.querySelector('.reveal-section');
+    if(section) section.classList.add('revealed');
+  }
 
-        const displayEl = document.getElementById(`display-${courseId}`);
-        const kbEl = document.getElementById(`kb-${courseId}`);
-        const triesEl = document.getElementById(`tries-${courseId}`);
-        const titleEl = document.getElementById(`title-${courseId}`);
-        if (!displayEl || !kbEl) return;
+  /* --- 抽籤與動畫邏輯 --- */
+  function initLotteryNames() {
+    const box = document.getElementById('lotteryBox');
+    box.innerHTML = '';
+    lotteryData = [...STUDENT_LIST]; // 複製 269 人名單
 
-        if (triesEl) {
-            triesEl.innerText = `機會 Tries: ${state.maxTries - state.wrongTries}`;
-        }
+    const container = document.createElement('div');
+    container.className = 'float-name-container';
+    container.id = 'floatContainer';
 
-        const words = state.targetWord.split(' ');
-        let displayHtml = '';
-        let isComplete = true;
-
-        words.forEach(word => {
-            let wordHtml = '<div class="word-row">';
-            for (let char of word) {
-                if (/[A-Z]/.test(char)) {
-                    if (state.guessedLetters.has(char) || state.solved) {
-                        wordHtml += char + ' ';
-                    } else {
-                        wordHtml += '_ ';
-                        isComplete = false;
-                    }
-                } else {
-                    wordHtml += char + ' ';
-                }
-            }
-            wordHtml += '</div>';
-            displayHtml += wordHtml;
-        });
-
-        displayEl.innerHTML = displayHtml;
-
-        if (isComplete && !state.solved) {
-            state.solved = true;
-        }
-
-        if (state.solved) {
-            titleEl.innerText = `${state.course.titleZh} ${state.course.titleEn}`;
-            if (triesEl) triesEl.innerText = state.wrongTries >= state.maxTries ? "遊戲結束 Over" : "完成 Completed!";
-        }
-
-        kbEl.innerHTML = '';
-        const alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
-        alphabet.forEach(letter => {
-            const btn = document.createElement('button');
-            btn.className = 'key-btn';
-            btn.innerText = letter;
-            if (state.guessedLetters.has(letter) || state.solved) {
-                btn.disabled = true;
-            }
-            btn.onclick = () => guessLetter(courseId, letter);
-            kbEl.appendChild(btn);
-        });
-    }
-
-    function guessLetter(courseId, letter) {
-        const state = hangmanStates[courseId];
-        if (!state || state.solved) return;
-
-        state.guessedLetters.add(letter);
-        if (!state.targetWord.includes(letter)) {
-            state.wrongTries++;
-        }
-
-        if (state.wrongTries >= state.maxTries) {
-            state.solved = true;
-        }
-
-        renderHangman(courseId);
-    }
-
-    function skipHangman(courseId) {
-        if (hangmanStates[courseId]) {
-            hangmanStates[courseId].solved = true;
-            renderHangman(courseId);
-        }
-    }
-
-    function updateSlides() {
-        slides = document.querySelectorAll('.slide');
-        const totalSlides = slides.length;
-
-        slides.forEach((slide, idx) => {
-            if (idx === currentSlide) {
-                slide.classList.add('active');
-                slide.scrollTop = 0;
-            } else {
-                slide.classList.remove('active');
-            }
-        });
-
-        document.getElementById('page-indicator').innerText = `${currentSlide + 1} / ${totalSlides}`;
-        document.getElementById('prev-btn').disabled = (currentSlide === 0);
-        document.getElementById('next-btn').disabled = (currentSlide === totalSlides - 1);
-    }
-
-    function changeSlide(direction) {
-        slides = document.querySelectorAll('.slide');
-        const totalSlides = slides.length;
-        
-        currentSlide += direction;
-        if (currentSlide < 0) currentSlide = 0;
-        if (currentSlide >= totalSlides) currentSlide = totalSlides - 1;
-        
-        updateSlides();
-    }
-
-    document.addEventListener('DOMContentLoaded', () => {
-        coursesData.forEach(c => initHangman(c));
-        updateSlides();
+    lotteryData.forEach((name) => {
+      const span = document.createElement('span');
+      span.className = 'float-name';
+      span.innerText = name;
+      span.style.left = (Math.random() * 85) + '%';
+      span.style.top = (Math.random() * 85) + '%';
+      span.style.animationDelay = `${(Math.random() * 4).toFixed(2)}s`;
+      span.style.animationDuration = `${(4 + Math.random() * 4).toFixed(2)}s`;
+      container.appendChild(span);
     });
 
-    document.addEventListener('keydown', (e) => {
-        slides = document.querySelectorAll('.slide');
-        const totalSlides = slides.length;
+    box.appendChild(container);
+  }
 
-        if (e.key === 'ArrowRight' || e.key === 'PageDown') {
-            if (currentSlide < totalSlides - 1) changeSlide(1);
-        } else if (e.key === 'ArrowLeft' || e.key === 'PageUp') {
-            if (currentSlide > 0) changeSlide(-1);
+  function runLotteryAnimation() {
+    const box = document.getElementById('lotteryBox');
+    const drawBtn = document.getElementById('drawBtn');
+    const status = document.getElementById('lotteryStatus');
+    const floatContainer = document.getElementById('floatContainer');
+    
+    drawBtn.disabled = true;
+    status.innerText = '🌀 Shuffling......';
+
+    // 隨機洗牌算法
+    for (let i = lotteryData.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [lotteryData[i], lotteryData[j]] = [lotteryData[j], lotteryData[i]];
+    }
+
+    const floatItems = box.querySelectorAll('.float-name');
+    floatItems.forEach(item => item.classList.add('shuffling'));
+
+    // 階段一：首 8 秒名字大兜亂
+    let shuffleCounter = 0;
+    const shuffleInterval = setInterval(() => {
+      floatItems.forEach(item => {
+        item.style.left = (Math.random() * 85) + '%';
+        item.style.top = (Math.random() * 85) + '%';
+        item.style.transform = `rotate(${(Math.random() * 360).toFixed(0)}deg)`;
+      });
+      shuffleCounter++;
+
+      if (shuffleCounter >= 100) { // 0.08s * 100 = 8秒
+        clearInterval(shuffleInterval);
+        startFlyingResult();
+      }
+    }, 80);
+
+    // 階段二：所有 269 個名字以每 0.1 秒一個的速度依次飛入直列
+    function startFlyingResult() {
+      status.innerText = '🎲 抽籤結果登場中... Drawing Results...';
+      if (floatContainer) floatContainer.style.opacity = '0.05';
+
+      let resultCol = box.querySelector('.lottery-result-column');
+      if (!resultCol) {
+        resultCol = document.createElement('div');
+        resultCol.className = 'lottery-result-column';
+        box.appendChild(resultCol);
+      } else {
+        resultCol.innerHTML = '';
+      }
+
+      let currentIndex = 0;
+
+      // 每 0.1 秒飛入一個名字
+      const flyInterval = setInterval(() => {
+        if (currentIndex < lotteryData.length) {
+          const item = document.createElement('div');
+          item.className = 'item';
+          item.innerText = lotteryData[currentIndex];
+          resultCol.appendChild(item);
+          resultCol.scrollTop = resultCol.scrollHeight; // 自動捲動至最新結果
+          currentIndex++;
+        } else {
+          // 全部飛完
+          clearInterval(flyInterval);
+          if (floatContainer) floatContainer.style.display = 'none';
+          drawBtn.disabled = false;
+          status.innerText = '✅ 抽籤完成！(Drawn Completed)';
         }
-    });
+      }, 100);
+    }
+  }
 
-    updateSlides();
+  function copyLotteryResult() {
+    if (lotteryData.length === 0) return;
+    const textToCopy = lotteryData.join('\n');
+    navigator.clipboard.writeText(textToCopy).then(() => {
+      alert(`已複製 ${lotteryData.length} 位同學姓名至剪貼簿！\nCopied student names to clipboard.`);
+    });
+  }
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowRight' || e.key === 'Space') changeSlide(1);
+    if (e.key === 'ArrowLeft') changeSlide(-1);
+  });
+
+  window.onload = initDeck;
 </script>
 </body>
 </html>
