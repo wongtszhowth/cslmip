@@ -98,7 +98,7 @@
             display: inline-block;
         }
 
-        /* Theory Slide - 1. 八大智能格子全部等大 */
+        /* Theory Slide - 八大智能格子全部等大 */
         .theory-intro {
             background: var(--light-green);
             border-left: 5px solid var(--primary-green);
@@ -142,7 +142,7 @@
             color: var(--text-muted);
         }
 
-        /* Date Slide */
+        /* Date Slide - 調整卡片大小以支援英文日期格式 */
         .dates-container {
             display: flex;
             flex-wrap: wrap;
@@ -156,27 +156,28 @@
             background: #f1f8e9;
             border: 2px solid var(--accent-green);
             border-radius: 12px;
-            width: 120px;
-            height: 85px;
+            width: 140px; /* 相應調寬以適應長英文字母 */
+            height: 90px;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
             text-align: center;
-            padding: 4px;
+            padding: 8px;
             box-sizing: border-box;
         }
 
         .date-card .date {
-            font-size: 1.3rem;
+            font-size: 1.05rem;
             font-weight: bold;
             color: var(--dark-green);
+            line-height: 1.2;
         }
 
         .date-card .note {
             font-size: 0.7rem;
             color: #d32f2f;
-            margin-top: 2px;
+            margin-top: 4px;
             font-weight: bold;
             line-height: 1.1;
         }
@@ -311,7 +312,7 @@
             letter-spacing: 3px;
         }
 
-        /* 3. A-Z 按鈕固定為 2 行每行 13 個 */
+        /* A-Z 按鈕固定為 2 行每行 13 個 */
         .keyboard {
             display: grid;
             grid-template-columns: repeat(13, 1fr);
@@ -518,7 +519,7 @@
                 grid-template-columns: repeat(2, 1fr);
             }
 
-            /* 2. 手機端日期卡片變為一列直落 */
+            /* 手機端日期卡片一列直落，相應調整高度與字型大小 */
             .dates-container {
                 flex-direction: column;
                 gap: 8px;
@@ -526,14 +527,14 @@
 
             .date-card {
                 width: 100%;
-                max-width: 200px;
-                height: 50px;
+                max-width: 240px;
+                height: 55px;
                 flex-direction: row;
                 justify-content: space-around;
                 padding: 0 12px;
             }
 
-            .date-card .date { font-size: 1.1rem; }
+            .date-card .date { font-size: 0.95rem; }
             .date-card .note { margin-top: 0; }
 
             .course-id { font-size: 1rem; }
@@ -594,19 +595,19 @@
         </div>
     </div>
 
-    <!-- Slide 3: Dates -->
+    <!-- Slide 3: Dates (更新為英文日期格式) -->
     <div class="slide">
         <div class="section-title">多元智能課日期</div>
         <div class="section-subtitle">Multi-Intelligence Period Dates</div>
         <div class="dates-container">
-            <div class="date-card"><div class="date">17 / 9</div></div>
-            <div class="date-card"><div class="date">15 / 10</div></div>
+            <div class="date-card"><div class="date">17th September</div></div>
+            <div class="date-card"><div class="date">15th October</div></div>
             <div class="date-card">
-                <div class="date">29 / 10</div>
+                <div class="date">29th October</div>
                 <div class="note">*中六除外<br>*Except S6</div>
             </div>
-            <div class="date-card"><div class="date">19 / 11</div></div>
-            <div class="date-card"><div class="date">10 / 12</div></div>
+            <div class="date-card"><div class="date">19th November</div></div>
+            <div class="date-card"><div class="date">10th December</div></div>
         </div>
     </div>
 
@@ -623,10 +624,10 @@
             </div>
 
             <div class="qr-container">
-                <img src="qrcode.jpg" alt="QR Code" onerror="this.onerror=null; this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'100\' height=\'100\'><rect width=\'100%\' height=\'100%\' fill=\'%23eee\'/><text x=\'50%\' y=\'50%\' font-size=\'10\' fill=\'%23888\' text-anchor=\'middle\' dy=\'.3em\'>qrcode.jpg</text></svg>';">
+                <img src="qrcode.png" alt="QR Code" onerror="this.onerror=null; this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'100\' height=\'100\'><rect width=\'100%\' height=\'100%\' fill=\'%23eee\'/><text x=\'50%\' y=\'50%\' font-size=\'10\' fill=\'%23888\' text-anchor=\'middle\' dy=\'.3em\'>qrcode.jpg</text></svg>';">
             </div>
 
-            <a href="https://forms.microsoft.com/r/YyazF0NJEk" target="_blank" class="reg-link">報名連結 / Registration Link</a>
+            <a href="https://forms.cloud.microsoft/r/Xk9bJAXDpm" target="_blank" class="reg-link">報名連結 / Registration Link</a>
 
             <div class="reg-note-red">
                 請登入學校 Microsoft 帳戶 (@chusheklun.edu.hk) 填寫，如未能順利登入可嘗試以「無痕模式」開啟連結。你可以預先到 <a href="https://account.microsoft.com/" target="_blank" style="color:#d32f2f; text-decoration:underline;">https://account.microsoft.com/</a> 測試登入。<br>
